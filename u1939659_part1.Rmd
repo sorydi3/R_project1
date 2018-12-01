@@ -1,0 +1,72 @@
+---
+title: "u1939659_part1"
+author: "Diallo"
+date: "1 de diciembre de 2018"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library("dplyr")
+library("ggplot2")
+load("~/practica1/emex/emex.RData")
+emex.data
+head(emex.data)
+head(emex.desc)
+```
+#select vars
+
+Feu un gràfic on es mostrin únicament els municipis provinents de la província de Tarragona. Feu que el gràfic mostri els municipis d’una mateixa comarca amb el mateix color. Introduïu una llegenda. [1.5 punts]
+
+```{r}
+df <- emex.data %>%
+select(mun, com, prov,f328,f329) %>%
+filter(prov=="Tarragona")
+
+```
+
+```{r}
+ggplot(data=df, aes(x = f329,y = f328,color=com))+ 
+  geom_point(aes(group=com))
+```
+
+Feu un gràfic com l’anterior on es mostrin les longituds i latituds mitjanes dels municipis de cada comarca. Feu el gràfic únicament amb les comarques de la província Tarragona. [1.5 punts]
+
+```{r}
+ meanlt <- df %>%
+  group_by(com) %>%
+  summarise(mitL=mean(f329,na.rm = TRUE),mitLon=mean(f328,na.rm = TRUE))
+```
+```{r}
+ggplot(data=meanlt, aes(x = mitL,y = mitLon,color=com))+ 
+  geom_point(aes(group=com))
+```
+
+Modifica l’execució del chunk anterior per a poder calcular la distància mitjana, mediana, màxima i mínima entre els municipis d’una mateixa comarca. Restringeix-te a la província de Girona. També inclou alguna mesura de variabilitat. Presenta els resultats en una taula. [1.5 punts]
+
+
+```{r}
+LATKM = 111 
+LONKM = 90
+# La funció zout converteix la matriu de distàncies en un vector i elimina les distàncies
+# entre un mateix municipi.
+zout = function(x) unlist(x)[unlist(x) != 0]
+dfknir<-emex.data %>% 
+  mutate(latkm = LATKM * f328, lonkm = LONKM) %>%
+  filter(prov == 'Girona') %>%
+  group_by(com) %>%
+  do(d = dist(select(., latkm, lonkm))) %>%
+  mutate(
+    mean.dist = mean(zout(d), na.rm=TRUE),median.dist = median(zout(d), na.rm=TRUE),min.dist = min(zout(d), na.rm=TRUE),max.dist = max(zout(d), na.rm=TRUE)) %>%
+  select(-d)
+```
+```{r}
+library(knitr)
+dfknir %>% 
+  head() %>% 
+  kable()
+```
+
