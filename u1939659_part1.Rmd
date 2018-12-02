@@ -13,9 +13,6 @@ knitr::opts_chunk$set(echo = TRUE)
 library("dplyr")
 library("ggplot2")
 load("~/practica1/emex/emex.RData")
-emex.data
-head(emex.data)
-head(emex.desc)
 ```
 #select vars
 
