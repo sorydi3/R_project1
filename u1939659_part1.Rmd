@@ -16,33 +16,33 @@ load("~/practica1/emex/emex.RData")
 ```
 #select vars
 
-Feu un gràfic on es mostrin únicament els municipis provinents de la província de Tarragona. Feu que el gràfic mostri els municipis d’una mateixa comarca amb el mateix color. Introduïu una llegenda. [1.5 punts]
+**Feu un grafic on es mostrin unicament els municipis provinents de la provincia de Tarragona. Feu que el grafic mostri els municipis d una mateixa comarca amb el mateix color. Introduiu una llegenda. [1.5 punts]**
 
 ```{r}
 df <- emex.data %>%
-select(mun, com, prov,f328,f329) %>%
+select(mun, comarques=com, prov,long=f328,lat=f329) %>%
 filter(prov=="Tarragona")
 
 ```
 
 ```{r}
-ggplot(data=df, aes(x = f329,y = f328,color=com))+ 
-  geom_point(aes(group=com))
+ggplot(data=df, aes(x = lat,y = long,color=comarques))+ 
+  geom_point(aes(group=comarques))
 ```
 
-Feu un gràfic com l’anterior on es mostrin les longituds i latituds mitjanes dels municipis de cada comarca. Feu el gràfic únicament amb les comarques de la província Tarragona. [1.5 punts]
+**Feu un grafic com l’anterior on es mostrin les longituds i latituds mitjanes dels municipis de cada comarca. Feu el grafic unicament amb les comarques de la provincia Tarragona. [1.5 punts]**
 
 ```{r}
  meanlt <- df %>%
-  group_by(com) %>%
-  summarise(mitL=mean(f329,na.rm = TRUE),mitLon=mean(f328,na.rm = TRUE))
+  group_by(comarques) %>%
+  summarise(mitjanaLatitud=mean(lat,na.rm = TRUE),mitjanaLongitud=mean(long,na.rm = TRUE))
 ```
 ```{r}
-ggplot(data=meanlt, aes(x = mitL,y = mitLon,color=com))+ 
-  geom_point(aes(group=com))
+ggplot(data=meanlt, aes(x = mitjanaLatitud,y = mitjanaLongitud,color=comarques))+ 
+  geom_point(aes(group=comarques))
 ```
 
-Modifica l’execució del chunk anterior per a poder calcular la distància mitjana, mediana, màxima i mínima entre els municipis d’una mateixa comarca. Restringeix-te a la província de Girona. També inclou alguna mesura de variabilitat. Presenta els resultats en una taula. [1.5 punts]
+**Modifica l execucio del chunk anterior per a poder calcular la distancia mitjana, mediana, maxima i mínima entre els municipis d una mateixa comarca. Restringeix-te a la provincia de Girona. Tambe inclou alguna mesura de variabilitat. Presenta els resultats en una taula. [1.5 punts]**
 
 
 ```{r}

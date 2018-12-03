@@ -18,7 +18,8 @@ mostreig = function(.data, udg_id){
 }
 emex.mostra = mostreig(emex.data, 'u1939659')
 ```
-Feu una descriptiva numèrica i gràfica de la variable proporció de dones del municipi. (utilitzeu les variables amb codi t195 a la columna t.code del dataframe emex.desc). [1.5 punts]
+
+**Feu una descriptiva numerica i grefica de la variable proporcio de dones del municipi. (utilitzeu les variables amb codi t195 a la columna t.code del dataframe emex.desc). [1.5 punts]**
 
 ```{r}
   Homes <- emex.mostra %>%
@@ -44,12 +45,12 @@ p <- ggplot(NULL, aes(com, gender)) +
   theme(plot.title = element_text(hjust = 0.5))
 p
 ```
-Veiem que la proporció d'homes i dones es bastant igualada en la majoria de municipis
-a excepció, dels municipis amb major població que aquesta proporció ja no es tan igual
-si no que la quantitat de dones és major.
+*Veiem que la proporcio d homes i dones es bastant igualada en la majoria de municipis*
+*a excepcio, dels municipis amb major poblacio que aquesta proporcio ja no es tan igual*
+*si no que la quantitat de dones es major.*
 
+**Repetiu les descriptives anteriors per Provincies. Comenteu-les. [1.5 punts]**
 
-Repetiu les descriptives anteriors per Províncies. Comenteu-les. [1.5 punts]
 ```{r}
   HomesP <- emex.mostra %>%
   select(mun,com,prov,ca,f320,f321) %>%
@@ -74,13 +75,14 @@ p <- ggplot(NULL, aes(prov, gender)) +
   theme(plot.title = element_text(hjust = 0.5))
 p
 ```
-Ara veiem que per províncies, en les que hi ha major població, hi ha més homes.
 
-Podem concloure que a mesura que la població aumenta la proporció de dones i homes difereix
-en major quantitat, afavorint a les dones en municipis i als homes en províncies.
+*Ara veiem que per provincies, en les que hi ha major poblacio, hi ha mes homes.
+Podem concloure que a mesura que la poblacie aumenta la proporcio de dones i homes difereix
+en major quantitat, afavorint a les dones en municipis i als homes en provincies.*
 
 
-El següent chunk crea un dataframe anomenat df.bestiar que conté una columna anomenada bestiar amb el tipus de bestiar més abundant al municipi. Descriviu aquest variable de forma numèrica i gràfica. Comenta el que obtinguis. [1.5 punts]
+**El seguent chunk crea un dataframe anomenat df.bestiar que conte una columna anomenada bestiar amb el tipus de bestiar mes abundant al municipi. Descriviu aquest variable de forma numerica i grafica. Comenta el que obtinguis. [1.5 punts]**
+
 ```{r}
 select_vars = function(.data, info){
   # Es comprova que les variables demanades existeixin.
@@ -122,11 +124,12 @@ df.bestiar %>% ggplot(aes(bestiar)) +
 ggtitle("Proporcio de Bestiar per Catalunya")+
   theme(plot.title = element_text(hjust = 0.5))
 ```
-Veiem que el bestiari que més abunda és l'Aviram, sent gairebé el 50% del bestiar. I per contra
-el que menys abunda és el cabrum amb menys del 5% del bestiar.
+
+*Veiem que el bestiari que més abunda es l Aviram, sent gairebe el 50% del bestiar. I per contra el que menys abunda es el cabrum amb menys del 5% del bestiar.*
 
 
-Descriviu la variable anterior per províncies. (haureu d’afegir la informació de la comarca al dataframe df.bestiar). [1.5 punts]
+**Descriviu la variable anterior per provincies. (haureu d afegir la informacio de la comarca al dataframe df.bestiar). [1.5 punts]**
+
 ```{r}
  df.com.prov <- emex.mostra %>% 
   select(com,mun,prov,f141,f142,f144,f145,f146,f147,f252) %>%
@@ -134,10 +137,6 @@ Descriviu la variable anterior per províncies. (haureu d’afegir la informaci�
   arrange(mun) %>% select(com,prov)
 df.com.prov<-cbind(df.bestiar,df.com,df.prov)
 ```
- 
-df.bestiar %>% ggplot(aes(bestiar)) + 
-  geom_bar(fill="pink")
-df.bestiar$mun
 
 ```{r}
 
@@ -148,7 +147,7 @@ df.com.prov %>%
   theme(plot.title = element_text(hjust = 0.5))
 
 ```
-Per províncies veiem que Barcelona té més bestiar. També podem veure que els
-porcins són els que més presència tenen. A Girona i a Lleida només hi ha quatre tipus
+Per provincies veiem que Barcelona te mes bestiar. Tambe podem veure que els
+porcins son els que mes presencia tenen. A Girona i a Lleida nomes hi ha quatre tipus
 i en canvi a Tarragona hi ha de tots els tipus.
 
